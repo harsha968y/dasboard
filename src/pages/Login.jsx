@@ -24,8 +24,8 @@ export default function Login() {
   return (
     <div className="centered">
       <form className="card" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <label>Email</label>
+        <h2 className='login'>Login</h2>
+        <label className='label'>Email :  </label>
         <input
           type="email"
           placeholder="user@example.com"
@@ -33,7 +33,9 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <label>Password</label>
+        <br />
+        <br />
+        <label className='label'>Password :</label>
         <input
           type="password"
           placeholder="password123"
@@ -42,7 +44,8 @@ export default function Login() {
           required
         />
         {error && <div className="error">{error}</div>}
-        <button className="btn" type="submit">Sign in</button>
+        <br />
+        <button className="btn" type="submit"> <display>Sign in </display></button>
         <p className="muted">Demo: user@example.com / password123</p>
       </form>
     </div>
