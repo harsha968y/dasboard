@@ -25,17 +25,18 @@ export default function Login() {
     <div className="centered">
       <form className="card" onSubmit={handleSubmit}>
         <h2 className='login'>Login</h2>
-        <label className='label'>Email :  </label>
-        <input
+        <label className='label'>Email </label>
+         <input
           type="email"
           placeholder="user@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+       
         <br />
         <br />
-        <label className='label'>Password :</label>
+        <label className='password'>Password </label>
         <input
           type="password"
           placeholder="password123"

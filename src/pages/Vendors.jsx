@@ -6,7 +6,7 @@ function loadVendors() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) return JSON.parse(raw)
-  } catch {}
+  } catch { }
   return [
     { id: crypto.randomUUID(), name: 'Acme Corp', contact: 'acme@example.com', status: 'Active' },
     { id: crypto.randomUUID(), name: 'Globex', contact: 'contact@globex.com', status: 'Active' },
@@ -66,54 +66,55 @@ export default function Vendors() {
         <h2>Vendors</h2>
         <input className="input" placeholder="Search vendors..." value={query} onChange={(e) => setQuery(e.target.value)} />
       </div>
+      <div className='manage-vendors'>
+        <form className="card form-grid" onSubmit={handleSubmit}>
+          <h3 style={{ gridColumn: '1 / -1' }}>{editingId ? 'Edit Vendor' : 'Add Vendor'}</h3>
+          <label>Name</label>
+          <input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+          <label>Contact</label>
+          <input className="input" value={form.contact} onChange={(e) => setForm({ ...form, contact: e.target.value })} required />
+          <label>Status</label>
+          <select className="input" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+          <div style={{ gridColumn: '1 / -1', display: 'flex', gap: 8 }}>
+            <button className="btn" type="submit">{editingId ? 'Update' : 'Add'}</button>
+            {editingId && (
+              <button className="btn" type="button" onClick={() => { setEditingId(null); resetForm() }}>Cancel</button>
+            )}
+          </div>
+        </form>
 
-      <form className="card form-grid" onSubmit={handleSubmit}>
-        <h3 style={{ gridColumn: '1 / -1' }}>{editingId ? 'Edit Vendor' : 'Add Vendor'}</h3>
-        <label>Name</label>
-        <input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-        <label>Contact</label>
-        <input className="input" value={form.contact} onChange={(e) => setForm({ ...form, contact: e.target.value })} required />
-        <label>Status</label>
-        <select className="input" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
-          <option>Active</option>
-          <option>Inactive</option>
-        </select>
-        <div style={{ gridColumn: '1 / -1', display: 'flex', gap: 8 }}>
-          <button className="btn" type="submit">{editingId ? 'Update' : 'Add'}</button>
-          {editingId && (
-            <button className="btn" type="button" onClick={() => { setEditingId(null); resetForm() }}>Cancel</button>
-          )}
-        </div>
-      </form>
-
-      <div className="card">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Contact</th>
-              <th>Status</th>
-              <th style={{ width: 140 }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map(v => (
-              <tr key={v.id}>
-                <td>{v.name}</td>
-                <td>{v.contact}</td>
-                <td>
-                  <span className={`badge ${v.status === 'Active' ? 'success' : 'danger'}`}>{v.status}</span>
-                </td>
-                <td>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button className="btn" onClick={() => handleEdit(v)}>Edit</button>
-                    <button className="btn" onClick={() => handleDelete(v.id)}>Delete</button>
-                  </div>
-                </td>
+        <div className="card">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Status</th>
+                <th style={{ width: 140 }}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map(v => (
+                <tr key={v.id}>
+                  <td>{v.name}</td>
+                  <td>{v.contact}</td>
+                  <td>
+                    <span className={`badge ${v.status === 'Active' ? 'success' : 'danger'}`}>{v.status}</span>
+                  </td>
+                  <td>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button className="btn" onClick={() => handleEdit(v)}>Edit</button>
+                      <button className="btn" onClick={() => handleDelete(v.id)}>Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
